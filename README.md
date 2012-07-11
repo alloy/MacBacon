@@ -183,7 +183,7 @@ You can define shared contexts in Bacon like this:
       end
     end
 
-    context "A new array" do
+    describe "A new array" do
       behaves_like "an empty container"
     end
 
