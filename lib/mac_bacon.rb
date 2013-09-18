@@ -323,6 +323,8 @@ module Bacon
         args.unshift(name)
         init_context(args.join(' '), @context_depth + 1, @before, @after, &block)
       end
+
+      alias_method :context, :describe
     end
   end # Context
 
@@ -524,6 +526,7 @@ module Kernel
   private
   def describe(*args, &block) Bacon::Context.init_context(args.join(' '), 1, &block)  end
   def shared(name, &block)    Bacon::Shared[name] = block                             end
+  alias_method :context, :describe
 end
 
 class Should

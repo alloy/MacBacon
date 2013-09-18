@@ -16,49 +16,49 @@ Whirl-wind tour
 ===============
 
     require 'mac_bacon'
-    
+
     describe 'A new array' do
       before do
         @ary = Array.new
       end
-      
+
       it 'should be empty' do
         @ary.should.be.empty
         @ary.should.not.include 1
       end
-    
+
       it 'should have zero size' do
         @ary.size.should.equal 0
         @ary.size.should.be.close 0.1, 0.5
       end
-    
+
       it 'should raise on trying fetch any index' do
         lambda { @ary.fetch 0 }.
           should.raise(IndexError).
           message.should.match(/out of array/)
-    
+
         # Alternatively:
         should.raise(IndexError) { @ary.fetch 0 }
       end
-    
+
       it 'should have an object identity' do
         @ary.should.not.be.same_as Array.new
       end
-    
+
       it 'should perform a long running operation' do
         @ary.performSelector("addObject:", withObject:"soup", afterDelay:0.5)
         wait 0.6 do
           @ary.size.should.be 1
         end
       end
-    
+
       # Custom assertions are trivial to do, they are lambdas returning a
       # boolean vale:
       palindrome = lambda { |obj| obj == obj.reverse }
       it 'should be a palindrome' do
         @ary.should.be.a palindrome
       end
-    
+
       it 'should have super powers' do
         should.flunk "no super powers found"
       end
@@ -91,7 +91,7 @@ If you want shorter output, use the Test::Unit format:
     	./whirlwind.rb:39: A new array - should have super powers
     	./whirlwind.rb:38
     	./whirlwind.rb:3
-    
+
     7 tests, 10 assertions, 1 failures, 0 errors
 
 It also supports TAP:
@@ -170,6 +170,15 @@ a context and are run before and after each specification.
 As of Bacon 1.1, before and after do nest in nested contexts.
 
 
+describe/context
+================
+
+You can use `describe` and `context` to make your tests
+clear and well organized.
+
+`context` is alias of `describe`.
+
+
 Shared contexts
 ===============
 
@@ -201,7 +210,7 @@ example:
     def shorter_than(max_size)
       lambda { |obj| obj.size < max_size }
     end
-    
+
     [1,2,3].should.be shorter_than(5)
 
 You can use modules and extend to group matchers for use in multiple
@@ -321,9 +330,9 @@ then you can use the `load_nib` method to easily do so:
         nib_path = File.join(SRC_ROOT, 'app/views/PreferencesWindow.xib')
         @top_level_objects = load_nib(nib_path, @controller)
       end
-      
+
       # tests...
-      
+
     end
 
 
@@ -335,7 +344,7 @@ bacon standalone runner
     -p, --tap                do TAP (Test Anything Protocol) output
     -k, --knock              do Knock output
     -o, --output FORMAT      do FORMAT (SpecDox/TestUnit/Tap) output
-    -Q, --no-backtrace       don't print backtraces  
+    -Q, --no-backtrace       don't print backtraces
     -a, --automatic          gather tests from ./test/, include ./lib/
     -c, --concurrent         runs multiple specs concurrently on multiple GCD threads
     -n, --name NAME          runs tests matching regexp NAME
